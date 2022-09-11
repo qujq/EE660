@@ -10,10 +10,10 @@ import math
 # d = np.load("./data/dataset3_dim9_Ntr500.npz")
 # d = np.load("./data/dataset4_dim2_Ntr5.npz")
 # d = np.load("./data/dataset5_dim2_Ntr15.npz")
-# d = np.load("./data/dataset6_dim2_Ntr50.npz")
+d = np.load("./data/dataset6_dim2_Ntr50.npz")
 # d = np.load("./data/dataset7_dim2_Ntr5.npz")
 # d = np.load("./data/dataset8_dim2_Ntr15.npz")
-d = np.load("./data/dataset9_dim2_Ntr50.npz")
+# d = np.load("./data/dataset9_dim2_Ntr50.npz")
 
 X_train = d['X_train']
 y_train = d['y_train']
@@ -26,21 +26,20 @@ X_test = np.hstack(([[1] for _ in range(len(X_test))], X_test))
 X_train_len = len(X_train)
 cross_validation_size = int(X_train_len / 5)
 
-
 print("==================")
 print("Least Square")
 print("==================")
 
-lease_square = LinearRegression().fit(X_train, y_train)
-print("MSE on train: ", mean_squared_error(y_train, lease_square.predict(X_train)))
-print("MSE on test: ", mean_squared_error(y_test, lease_square.predict(X_test)))
-w = np.round(lease_square.coef_, 3)
+least_square = LinearRegression(fit_intercept=False).fit(X_train, y_train)
+print("MSE on train: ", mean_squared_error(y_train, least_square.predict(X_train)))
+print("MSE on test: ", mean_squared_error(y_test, least_square.predict(X_test)))
+w = np.round(least_square.coef_, 3)
 print("w: ", w)
 
 l1_norm = 0
 l2_norm = 0
 spars = 0
-for i in range(1, len(w)):
+for i in range(len(w)):
     l1_norm += abs(w[i])
     l2_norm += w[i] ** 2
     if w[i] == 0:
@@ -75,11 +74,11 @@ for log_lambda in range(-100, 105, 5):
         y_train_cur = np.copy(y_train)
         y_train_cur = np.delete(y_train, np.s_[i * cross_validation_size : (i + 1) * cross_validation_size], axis = 0)
 
-        lasso = linear_model.Lasso(alpha=lambda_value)
+        lasso = linear_model.Lasso(alpha=lambda_value, fit_intercept=False)
         lasso.fit(X_train_cur, y_train_cur)
         lasso_mse_list.append(mean_squared_error(y_validation, lasso.predict(X_validation)))
         
-        ridge = linear_model.Ridge(alpha=lambda_value)
+        ridge = linear_model.Ridge(alpha=lambda_value, fit_intercept=False)
         ridge.fit(X_train_cur, y_train_cur)
         ridge_mse_list.append(mean_squared_error(y_validation, ridge.predict(X_validation)))
 
@@ -105,7 +104,7 @@ print("==================")
 print("Lasso")
 print("==================")
 
-lasso_final = linear_model.Lasso(alpha=lasso_best_lambda)
+lasso_final = linear_model.Lasso(alpha=lasso_best_lambda, fit_intercept=False)
 lasso_final.fit(X_train, y_train)
 print("mean of MSE: ", lasso_min_mean_mse)
 print("std of MSE: ", lasso_final_std_mse)
@@ -118,7 +117,7 @@ print("w: ", w)
 l1_norm = 0
 l2_norm = 0
 spars = 0
-for i in range(1,len(w)):
+for i in range(len(w)):
     l1_norm += abs(w[i])
     l2_norm += w[i] ** 2
     if w[i] == 0:
@@ -133,7 +132,7 @@ print("==================")
 print("Ridge")
 print("==================")
 
-ridge_final = linear_model.Ridge(alpha=ridge_best_lambda)
+ridge_final = linear_model.Ridge(alpha=ridge_best_lambda, fit_intercept=False)
 ridge_final.fit(X_train, y_train)
 print("mean of MSE: ", ridge_min_mean_mse)
 print("std of MSE: ", ridge_final_std_mse)
@@ -146,7 +145,7 @@ print("w: ", w)
 l1_norm = 0
 l2_norm = 0
 spars = 0
-for i in range(1, len(w)):
+for i in range(len(w)):
     l1_norm += abs(w[i])
     l2_norm += w[i] ** 2
     if w[i] == 0:
