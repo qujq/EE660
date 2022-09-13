@@ -10,10 +10,10 @@ import math
 # d = np.load("./data/dataset3_dim9_Ntr500.npz")
 # d = np.load("./data/dataset4_dim2_Ntr5.npz")
 # d = np.load("./data/dataset5_dim2_Ntr15.npz")
-d = np.load("./data/dataset6_dim2_Ntr50.npz")
+# d = np.load("./data/dataset6_dim2_Ntr50.npz")
 # d = np.load("./data/dataset7_dim2_Ntr5.npz")
 # d = np.load("./data/dataset8_dim2_Ntr15.npz")
-# d = np.load("./data/dataset9_dim2_Ntr50.npz")
+d = np.load("./data/dataset9_dim2_Ntr50.npz")
 
 X_train = d['X_train']
 y_train = d['y_train']
@@ -110,7 +110,7 @@ print("mean of MSE: ", lasso_min_mean_mse)
 print("std of MSE: ", lasso_final_std_mse)
 print("MSE on train: ", mean_squared_error(y_train, lasso_final.predict(X_train)))
 print("MSE on test: ", mean_squared_error(y_test, lasso_final.predict(X_test)))
-print("Lambda: ", lasso_best_lambda)
+print("Lambda: ", math.log2(lasso_best_lambda))
 w = np.round(lasso_final.coef_, 3)
 print("w: ", w)
 
@@ -138,7 +138,7 @@ print("mean of MSE: ", ridge_min_mean_mse)
 print("std of MSE: ", ridge_final_std_mse)
 print("MSE on train: ", mean_squared_error(y_train, ridge_final.predict(X_train)))
 print("MSE on test: ", mean_squared_error(y_test, ridge_final.predict(X_test)))
-print("Lambda: ", ridge_best_lambda)
+print("Lambda: ", math.log2(ridge_best_lambda))
 w = np.round(ridge_final.coef_, 3)
 print("w: ", w)
 

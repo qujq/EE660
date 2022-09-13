@@ -55,7 +55,12 @@ def display(w,Xtest,Ytest,norm='l2',
 
 def main():
 	# how to load data
-	filename = 'example_data.npz'
+	# filename = './data/dataset4_dim2_Ntr5.npz'
+	# filename = './data/dataset5_dim2_Ntr15.npz'
+	# filename = './data/dataset6_dim2_Ntr50.npz'
+	# filename = './data/dataset7_dim2_Ntr5.npz'
+	# filename = './data/dataset8_dim2_Ntr15.npz'
+	filename = './data/dataset9_dim2_Ntr50.npz'
 	dataset = np.load(filename)
 	Xtrain,Ytrain,Xtest,Ytest = dataset['X_train'],dataset['y_train'],dataset['X_test'],dataset['y_test']
 
@@ -68,10 +73,10 @@ def main():
 	# make sure that the dimension of w and Xtrain is consistent, i.e., if w is augmented, so should Xtrain be.
 
 	# for l1 results
-	w = [ 2.91, 1.37, 2. ] 
+	w = [ 3.948, 2.429, 0  ] 
 	display(w,Xtrain,Ytrain,norm='l1')
 	# for l2 results
-	w = [2.3,  1.39, 1.88]
+	w = [3.806, 2.367, 0.071]
 	display(w,Xtrain,Ytrain,norm='l2')
 	plt.show()
 	return
