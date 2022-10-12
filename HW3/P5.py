@@ -39,6 +39,7 @@ for _ in range(100):
 plt.plot(x, y, 'r')
 hg_mean = [np.mean(a_list) * i + np.mean(b_list) for i in x]
 plt.plot(x, hg_mean, 'b')
+plt.show()
 print("a: ", np.mean(a_list))
 print("b: ", np.mean(b_list))
 
@@ -55,4 +56,3 @@ for i in range(len(x1_list)):
 print("bias:", np.mean(bias_list))
 print("var:", np.mean(var_list))
 print("EdEout(hg):", np.mean(bias_list) + np.mean(var_list))
-
