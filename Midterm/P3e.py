@@ -21,8 +21,9 @@ def get_hx(f_x_coeff, x):
     res += f_x_coeff[i] * (x ** i)
   return res
 
-k = 5
-N = 10
+k = 10
+N = 30
+alpha = 500
 E_D_E_in_list = []
 E_D_E_out_list = []
 for _ in range(1000):
@@ -38,8 +39,8 @@ for _ in range(1000):
   Y = [get_fx(f_x_coeff, x) for x in X_list]
 
   import numpy as np
-  from sklearn.linear_model import LinearRegression
-  reg = LinearRegression(fit_intercept=False).fit(X_input, Y)
+  from sklearn.linear_model import Ridge
+  reg = Ridge(fit_intercept=False, alpha=alpha).fit(X_input, Y)
   h_k_coeff = reg.coef_
 
   # E in
@@ -61,8 +62,6 @@ for _ in range(1000):
   E_out = np.mean(E_out_each_list)
   E_D_E_out_list.append(E_out)
 
-print(k, N)
+print(alpha)
 print(np.mean(E_D_E_in_list))
-# print(E_D_E_in_list)
 print(np.mean(E_D_E_out_list))
-# print(E_D_E_out_list)
