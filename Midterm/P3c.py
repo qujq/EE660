@@ -51,7 +51,7 @@ for _ in range(1000):
   X_out = np.linspace(-1, 1, 10000)
   E_out_each_list = []
   for x_i in X_out:
-    E_out_each_list.append((get_fx(h_k_coeff, x_i) - get_fx(f_x_coeff, x_i) ** 2))
+    E_out_each_list.append((get_fx(h_k_coeff, x_i) - get_fx(f_x_coeff, x_i)) ** 2)
   E_out = np.mean(E_out_each_list)
   E_D_E_out_list.append(E_out)
 
