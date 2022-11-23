@@ -5,6 +5,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
+from sklearn import tree
 
 data = np.array(pd.read_csv('./heart_disease_health_indicators_BRFSS2015.csv', header = 0, usecols = ['HeartDiseaseorAttack','HighBP','HighChol','CholCheck','BMI','Smoker','Stroke','Diabetes','PhysActivity','Fruits','Veggies','HvyAlcoholConsump','AnyHealthcare','NoDocbcCost', 'GenHlth', 'MentHlth','PhysHlth','DiffWalk', 'Age', 'Income']).values)
 
@@ -30,11 +31,31 @@ def down_sampling(data):  # down sample to make source domain balance
 
 high_income = down_sampling(high_income)
 
-X_s = high_income[:, 1:]
+X_s = high_income[:, 1:(len(high_income) - 1)]  # drop Income column
 y_s = high_income[:, 0]
 
-X_t = low_income[:, 1:]
+X_t = low_income[:, 1:(len(high_income) - 1)]
 y_t = low_income[:, 0]
+
+def standardization_normalization(column_data, method="standardization"):
+    if method == "standardization":
+        mu = np.mean(column_data)
+        std = np.std(column_data)
+        column_data = (column_data - mu) / std
+        return column_data
+
+    elif method == "normalization":
+        max_value = max(column_data)
+        min_value = min(column_data)
+        column_data = (column_data - min_value) / (max_value - min_value)
+        return column_data
+    else:
+        return column_data
+
+for i in [3, 13, 14, 15, 17]:  # BMI, GenHlth, MentHlth, PhysHlth, Age columns
+    method="standardization"
+    X_s[:, i] = standardization_normalization(X_s[:, i], method=method)
+    X_t[:, i] = standardization_normalization(X_t[:, i], method=method)
 
 X_s_train, X_s_val, y_s_train, y_s_val = train_test_split(X_s, y_s, test_size=0.3)
 
@@ -49,7 +70,7 @@ def mix_data(X_s_train, y_s_train, X_t_train, y_t_train, target_data_percentage)
     y_s_train = np.hstack((y_s_train, choice_y))
     return X_s_train, y_s_train
 
-X_s_train, y_s_train = mix_data(X_s_train, y_s_train, X_t_train, y_t_train, 1)
+X_s_train, y_s_train = mix_data(X_s_train, y_s_train, X_t_train, y_t_train, 0)
 
 clf = LogisticRegression().fit(X_s_train, y_s_train)
 print(clf.score(X_s_val, y_s_val))
@@ -60,3 +81,4 @@ print(X_s_train.shape)
 clf = make_pipeline(StandardScaler(), SVC(gamma='auto'))
 clf.fit(X_s_train, y_s_train)
 print(clf.score(X_t_test, y_t_test))
+
