@@ -72,6 +72,21 @@ def mix_data(X_s_train, y_s_train, X_t_train, y_t_train, target_data_percentage)
 
 X_s_train, y_s_train = mix_data(X_s_train, y_s_train, X_t_train, y_t_train, 0)
 
+def get_accuracy(predicted_labels, true_labels):
+    n = len(true_labels)
+    count = 0
+    for i in range(n):
+        if predicted_labels[i] == true_labels[i]:
+            count += 1
+    return count / n
+
+def trivial_system(y_t_test):
+    n = len(y_t_test)
+    predicted_labels = np.random.randint(2, size=n)
+    print(get_accuracy(predicted_labels, y_t_test))
+
+trivial_system(y_t_test)
+
 def losistic_regression(X_s_train, y_s_train, X_s_val, y_s_val, X_t_test, y_t_test):
     clf = LogisticRegression().fit(X_s_train, y_s_train)
     print(clf.score(X_s_val, y_s_val))
