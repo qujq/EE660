@@ -72,11 +72,12 @@ def mix_data(X_s_train, y_s_train, X_t_train, y_t_train, target_data_percentage)
 
 X_s_train, y_s_train = mix_data(X_s_train, y_s_train, X_t_train, y_t_train, 0)
 
-clf = LogisticRegression().fit(X_s_train, y_s_train)
-print(clf.score(X_s_val, y_s_val))
-print(clf.score(X_t_test, y_t_test))
+def losistic_regression(X_s_train, y_s_train, X_s_val, y_s_val, X_t_test, y_t_test):
+    clf = LogisticRegression().fit(X_s_train, y_s_train)
+    print(clf.score(X_s_val, y_s_val))
+    print(clf.score(X_t_test, y_t_test))
 
-print(X_s_train.shape)
+losistic_regression(X_s_train, y_s_train, X_s_val, y_s_val, X_t_test, y_t_test)
 
 clf = make_pipeline(StandardScaler(), SVC(gamma='auto'))
 clf.fit(X_s_train, y_s_train)
