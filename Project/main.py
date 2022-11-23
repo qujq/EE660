@@ -82,3 +82,6 @@ clf = make_pipeline(StandardScaler(), SVC(gamma='auto'))
 clf.fit(X_s_train, y_s_train)
 print(clf.score(X_t_test, y_t_test))
 
+clf = tree.DecisionTreeClassifier()
+clf.fit(X_s_train, y_s_train)
+print(clf.score(X_t_test, y_t_test))
