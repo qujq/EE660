@@ -1,0 +1,33 @@
+digraph Tree {
+node [shape=box, style="filled, rounded", color="black", fontname="helvetica"] ;
+edge [fontname="helvetica"] ;
+0 [label=<HighChol &le; 0.5<br/>gini = 0.494<br/>samples = 8381<br/>value = [4659, 3722]<br/>class = 0>, fillcolor="#fae6d7"] ;
+1 [label=<Age &le; -0.5<br/>gini = 0.403<br/>samples = 3947<br/>value = [2842, 1105]<br/>class = 0>, fillcolor="#efb286"] ;
+0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
+2 [label=<PhysHlth &le; 2.5<br/>gini = 0.125<br/>samples = 1016<br/>value = [948, 68]<br/>class = 0>, fillcolor="#e78a47"] ;
+1 -> 2 ;
+3 [label=<gini = 0.113<br/>samples = 1000<br/>value = [940, 60]<br/>class = 0>, fillcolor="#e78946"] ;
+2 -> 3 ;
+4 [label=<gini = 0.5<br/>samples = 16<br/>value = [8, 8]<br/>class = 0>, fillcolor="#ffffff"] ;
+2 -> 4 ;
+5 [label=<Age &le; 0.5<br/>gini = 0.457<br/>samples = 2931<br/>value = [1894, 1037]<br/>class = 0>, fillcolor="#f3c6a5"] ;
+1 -> 5 ;
+6 [label=<gini = 0.422<br/>samples = 2407<br/>value = [1679, 728]<br/>class = 0>, fillcolor="#f0b88f"] ;
+5 -> 6 ;
+7 [label=<gini = 0.484<br/>samples = 524<br/>value = [215, 309]<br/>class = 1>, fillcolor="#c3e1f7"] ;
+5 -> 7 ;
+8 [label=<Age &le; -0.5<br/>gini = 0.484<br/>samples = 4434<br/>value = [1817, 2617]<br/>class = 1>, fillcolor="#c2e1f7"] ;
+0 -> 8 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
+9 [label=<PhysHlth &le; 1.5<br/>gini = 0.284<br/>samples = 268<br/>value = [222, 46]<br/>class = 0>, fillcolor="#ea9b62"] ;
+8 -> 9 ;
+10 [label=<gini = 0.26<br/>samples = 261<br/>value = [221, 40]<br/>class = 0>, fillcolor="#ea985d"] ;
+9 -> 10 ;
+11 [label=<gini = 0.245<br/>samples = 7<br/>value = [1, 6]<br/>class = 1>, fillcolor="#5aade9"] ;
+9 -> 11 ;
+12 [label=<GenHlth &le; 0.5<br/>gini = 0.473<br/>samples = 4166<br/>value = [1595, 2571]<br/>class = 1>, fillcolor="#b4daf5"] ;
+8 -> 12 ;
+13 [label=<gini = 0.489<br/>samples = 3308<br/>value = [1413, 1895]<br/>class = 1>, fillcolor="#cde6f8"] ;
+12 -> 13 ;
+14 [label=<gini = 0.334<br/>samples = 858<br/>value = [182, 676]<br/>class = 1>, fillcolor="#6eb7ec"] ;
+12 -> 14 ;
+}

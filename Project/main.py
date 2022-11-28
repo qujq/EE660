@@ -11,6 +11,10 @@ import matplotlib.pyplot as plt
 
 data = np.array(pd.read_csv('./heart_disease_health_indicators_BRFSS2015.csv', header = 0, usecols = ['HeartDiseaseorAttack','HighBP','HighChol','CholCheck','BMI','Smoker','Stroke','Diabetes','PhysActivity','Fruits','Veggies','HvyAlcoholConsump','AnyHealthcare','NoDocbcCost', 'GenHlth', 'MentHlth','PhysHlth','DiffWalk', 'Age', 'Income']).values)
 
+# 'HighBP','HighChol','CholCheck','BMI','Smoker','Stroke',
+# 'Diabetes','PhysActivity','Fruits','Veggies','HvyAlcoholConsump','AnyHealthcare',
+# 'NoDocbcCost', 'GenHlth', 'MentHlth','PhysHlth','DiffWalk', 'Age',
+
 high_income = data[np.where(data[:, -1] >= 8)]  # source domain
 low_income = data[np.where(data[:, -1] <= 1)]  # target domain
 
@@ -33,10 +37,10 @@ def down_sampling(data):  # down sample to make source domain balance
 
 high_income = down_sampling(high_income)
 
-X_s = high_income[:, 1:(len(high_income) - 1)]  # drop Income column
+X_s = high_income[:, 1:(len(high_income[0]) - 1)]  # drop Income column
 y_s = high_income[:, 0]
 
-X_t = low_income[:, 1:(len(high_income) - 1)]
+X_t = low_income[:, 1:(len(high_income[0]) - 1)]
 y_t = low_income[:, 0]
 
 print(len(X_s))
@@ -132,9 +136,17 @@ clf = make_pipeline(StandardScaler(), SVC(gamma='auto'))
 clf.fit(X_s_train, y_s_train)
 print(clf.score(X_t_test, y_t_test))
 
-clf = tree.DecisionTreeClassifier()
-clf.fit(X_s_train, y_s_train)
-print(clf.score(X_t_test, y_t_test))
+def decision_tree(X_s_train, y_s_train, X_t_test, y_t_test):
+    for max_depth in [3, 5, 7, 10]:
+        clf = tree.DecisionTreeClassifier(max_depth=max_depth)
+        clf.fit(X_s_train, y_s_train)
+        print(clf.score(X_t_test, y_t_test))
+        # print(clf.feature_importances_)
+        plt.figure()
+        tree.plot_tree(clf, fontsize=16)
+        plt.show()
+    
+decision_tree(X_s_train, y_s_train, X_t_test, y_t_test)
 
 def get_sign_matrix(length):
     end = 2 ** length - 1
